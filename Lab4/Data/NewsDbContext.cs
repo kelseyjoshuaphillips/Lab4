@@ -10,7 +10,7 @@ namespace Lab4.Data
         //dbset
         public DbSet<NewsBoard> NewsBoards { get; set; }
         public DbSet<Client> Clients { get; set; }
-
+        public DbSet<Subscription> Subscriptions { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<NewsBoard>().ToTable("Newsboard");

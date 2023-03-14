@@ -3,6 +3,6 @@
     public class Subscription
     {
         public int ClientId { get; set; }
-        public int NewsBoardId { get; set; }
+        public string NewsBoardId { get; set; }
     }
 }
