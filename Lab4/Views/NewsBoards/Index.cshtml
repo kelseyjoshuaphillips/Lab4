@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Lab4.Models.ViewModels.NewsBoardViewModel>
+﻿@model Lab4.Models.ViewModels.NewsBoardViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -22,18 +22,19 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.NewsBoards) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.NewsBoards.First().Title)
+                @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.NewsBoards.First().Fee)
+                @Html.DisplayFor(modelItem => item.Fee)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.NewsBoards.First().Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.NewsBoards.First().Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.NewsBoards.First().Id">Delete</a>
+                <a asp-action="Index" asp-route-id="@item.Id">Select</a> |
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }

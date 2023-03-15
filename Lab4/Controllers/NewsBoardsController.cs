@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Lab4.Data;
 using Lab4.Models;
+using Lab4.Models.ViewModels;
 
 namespace Lab4.Controllers
 {
@@ -20,9 +21,24 @@ namespace Lab4.Controllers
         }
 
         // GET: NewsBoards
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? Id)
         {
-              return View(await _context.NewsBoards.ToListAsync());
+            var viewModel = new NewsBoardViewModel
+            {
+                NewsBoards = await _context.NewsBoards
+                .Include(i => i.Client)
+                .AsNoTracking()
+                .OrderBy(i => i.Title)
+                .ToListAsync()
+            };
+            if (Id != null)
+            {
+                ViewData["NewsBoardID"] = Id;
+                viewModel.Clients = viewModel.NewsBoards
+                    .Where(x => x.ClientID == Id).Single().Client;
+            }
+            return View(viewModel);
+              //return View(await _context.NewsBoards.ToListAsync());
         }
 
         // GET: NewsBoards/Details/5
