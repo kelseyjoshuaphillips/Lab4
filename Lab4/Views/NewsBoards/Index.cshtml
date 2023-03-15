@@ -23,7 +23,12 @@
     </thead>
     <tbody>
 @foreach (var item in Model.NewsBoards) {
-        <tr>
+            string selectedRow = "";
+            if (item.Id.Equals(Convert.ToInt32(ViewData["NewsBoardID"]?.ToString())))
+            {
+                selectedRow = "success";
+            }
+            <tr class="@selectedRow">
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
@@ -40,3 +45,29 @@
 }
     </tbody>
 </table>
+@if (Model.Clients != null)
+{
+        <h3>
+            Subscribers to the newsboard:
+        </h3>
+        <table class="table">
+            <tr>
+            @if (Model.Clients.Count() > 0)
+            {
+                        <th> Owner </th>
+            }
+            else
+            {
+                        <th> No newsboard record exist </th>
+            }
+            </tr>
+        @foreach (var item in Model.Clients)
+        {
+                    <tr>
+                        <td>
+                    @item.FullName
+                        </td>
+                    </tr>
+        }
+        </table>
+}

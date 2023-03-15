@@ -21,7 +21,7 @@ namespace Lab4.Controllers
         }
 
         // GET: NewsBoards
-        public async Task<IActionResult> Index(int? Id)
+        public async Task<IActionResult> Index(string Id)
         {
             var viewModel = new NewsBoardViewModel
             {
@@ -34,11 +34,21 @@ namespace Lab4.Controllers
             if (Id != null)
             {
                 ViewData["NewsBoardID"] = Id;
-                viewModel.Clients = viewModel.NewsBoards
-                    .Where(x => x.ClientID == Id).Single().Client;
+      
+                viewModel.Subscriptions = _context.Subscriptions
+                    .Where(x => x.NewsBoardId.Equals(Id)).ToList();
+                var tempList = new List<Client>();
+                foreach (var item in viewModel.Subscriptions)
+                {
+                    var tempClient = _context.Clients
+                        .Where(x => x.Id.Equals(item.ClientId)).FirstOrDefault();
+                    tempList.Add(tempClient);
+                }
+                viewModel.Clients = tempList;
+
             }
             return View(viewModel);
-              //return View(await _context.NewsBoards.ToListAsync());
+
         }
 
         // GET: NewsBoards/Details/5
@@ -164,14 +174,14 @@ namespace Lab4.Controllers
             {
                 _context.NewsBoards.Remove(newsBoard);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool NewsBoardExists(string id)
         {
-          return _context.NewsBoards.Any(e => e.Id == id);
+            return _context.NewsBoards.Any(e => e.Id == id);
         }
     }
 }
