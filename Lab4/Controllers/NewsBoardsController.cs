@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Lab4.Data;
 using Lab4.Models;
-using Lab4.Models.ViewModels;
 
 namespace Lab4.Controllers
 {
@@ -21,34 +20,9 @@ namespace Lab4.Controllers
         }
 
         // GET: NewsBoards
-        public async Task<IActionResult> Index(string Id)
+        public async Task<IActionResult> Index()
         {
-            var viewModel = new NewsBoardViewModel
-            {
-                NewsBoards = await _context.NewsBoards
-                .Include(i => i.Client)
-                .AsNoTracking()
-                .OrderBy(i => i.Title)
-                .ToListAsync()
-            };
-            if (Id != null)
-            {
-                ViewData["NewsBoardID"] = Id;
-      
-                viewModel.Subscriptions = _context.Subscriptions
-                    .Where(x => x.NewsBoardId.Equals(Id)).ToList();
-                var tempList = new List<Client>();
-                foreach (var item in viewModel.Subscriptions)
-                {
-                    var tempClient = _context.Clients
-                        .Where(x => x.Id.Equals(item.ClientId)).FirstOrDefault();
-                    tempList.Add(tempClient);
-                }
-                viewModel.Clients = tempList;
-
-            }
-            return View(viewModel);
-
+              return View(await _context.NewsBoards.ToListAsync());
         }
 
         // GET: NewsBoards/Details/5
@@ -80,7 +54,7 @@ namespace Lab4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Fee,ClientID")] NewsBoard newsBoard)
+        public async Task<IActionResult> Create([Bind("Id,Title,Fee")] NewsBoard newsBoard)
         {
             if (ModelState.IsValid)
             {
@@ -112,7 +86,7 @@ namespace Lab4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Title,Fee,ClientID")] NewsBoard newsBoard)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,Title,Fee")] NewsBoard newsBoard)
         {
             if (id != newsBoard.Id)
             {
@@ -174,14 +148,14 @@ namespace Lab4.Controllers
             {
                 _context.NewsBoards.Remove(newsBoard);
             }
-
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool NewsBoardExists(string id)
         {
-            return _context.NewsBoards.Any(e => e.Id == id);
+          return _context.NewsBoards.Any(e => e.Id == id);
         }
     }
 }

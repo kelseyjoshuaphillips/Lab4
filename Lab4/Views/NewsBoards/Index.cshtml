@@ -1,4 +1,4 @@
-﻿@model Lab4.Models.ViewModels.NewsBoardViewModel
+﻿@model IEnumerable<Lab4.Models.NewsBoard>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,22 +13,17 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.NewsBoards.First().Title)
+                @Html.DisplayNameFor(model => model.Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NewsBoards.First().Fee)
+                @Html.DisplayNameFor(model => model.Fee)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.NewsBoards) {
-            string selectedRow = "";
-            if (item.Id.Equals(Convert.ToInt32(ViewData["NewsBoardID"]?.ToString())))
-            {
-                selectedRow = "success";
-            }
-            <tr class="@selectedRow">
+@foreach (var item in Model) {
+        <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
@@ -36,7 +31,6 @@
                 @Html.DisplayFor(modelItem => item.Fee)
             </td>
             <td>
-                <a asp-action="Index" asp-route-id="@item.Id">Select</a> |
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
@@ -45,29 +39,3 @@
 }
     </tbody>
 </table>
-@if (Model.Clients != null)
-{
-        <h3>
-            Subscribers to the newsboard:
-        </h3>
-        <table class="table">
-            <tr>
-            @if (Model.Clients.Count() > 0)
-            {
-                        <th> Owner </th>
-            }
-            else
-            {
-                        <th> No newsboard record exist </th>
-            }
-            </tr>
-        @foreach (var item in Model.Clients)
-        {
-                    <tr>
-                        <td>
-                    @item.FullName
-                        </td>
-                    </tr>
-        }
-        </table>
-}
