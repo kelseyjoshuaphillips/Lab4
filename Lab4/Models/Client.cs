@@ -5,6 +5,7 @@ namespace Lab4.Models
 {
     public class Client
     {
+        [Display(Name ="Client ID")]
         public int Id { get; set; }
         [Required]
         [StringLength(50)]
@@ -22,7 +23,6 @@ namespace Lab4.Models
         public string FullName { 
             get { return LastName + ", " + FirstName; } }
 
-        public int NewsBoardID { get; set; }
-        public ICollection<NewsBoard> NewsBoard { get; set; }
+        public ICollection<Subscription> Subscriptions { get; set; }
     }
 }

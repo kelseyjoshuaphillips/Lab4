@@ -15,5 +15,6 @@
     <WebStackScaffolding_DbContextTypeFullName>Lab4.Data.NewsDbContext</WebStackScaffolding_DbContextTypeFullName>
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
     <WebStackScaffolding_IsViewGenerationSelected>True</WebStackScaffolding_IsViewGenerationSelected>
+    <NameOfLastUsedPublishProfile>C:\Users\Kelsey Phillips\OneDrive - Algonquin College\Documents\Level5\CST8359 - dotNet Enterprise\Lab\repos\Lab4\Lab4\Properties\PublishProfiles\KelseyPhillipsLab4 - Web Deploy.pubxml</NameOfLastUsedPublishProfile>
   </PropertyGroup>
 </Project>

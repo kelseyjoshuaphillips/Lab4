@@ -17,7 +17,6 @@ namespace Lab4.Models
         [Column(TypeName ="money")]
         public decimal Fee { get; set; }
 
-        public int ClientID { get; set; }
-        public ICollection<Client> Client { get; set; }
+        public ICollection<Subscription> Subscriptions { get; set; }
     }
 }
